@@ -20,7 +20,7 @@ const TaskListPagination = ({
     const pages = [];
 
     if (totalPages < 4) {
-      // Show all pages if the total is small
+      // show all pages
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
@@ -43,7 +43,7 @@ const TaskListPagination = ({
     <div className="flex justify-center mt-4">
       <Pagination>
         <PaginationContent>
-          {/* Previous button */}
+          {/* Previous */}
           <PaginationItem>
             <PaginationPrevious
               onClick={page === 1 ? undefined : handlePrev}
@@ -54,7 +54,6 @@ const TaskListPagination = ({
             />
           </PaginationItem>
 
-          {/* Page numbers */}
           {pagesToShow.map((p, index) => (
             <PaginationItem key={index}>
               {p === "..." ? (
@@ -73,7 +72,7 @@ const TaskListPagination = ({
             </PaginationItem>
           ))}
 
-          {/* Next button */}
+          {/* Next */}
           <PaginationItem>
             <PaginationNext
               onClick={page === totalPages ? undefined : handleNext}

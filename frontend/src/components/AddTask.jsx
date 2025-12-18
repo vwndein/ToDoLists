@@ -16,13 +16,13 @@ const AddTask = ({ handleNewTaskAdded }) => {
         toast.success(`Task "${newTaskTitle}" has been added.`);
         handleNewTaskAdded();
       } catch (error) {
-        console.error("An error occurred while adding the task.", error);
+        console.error("Error occurred while adding task.", error);
         toast.error("An error occurred while adding the new task.");
       }
 
       setNewTaskTitle("");
     } else {
-      toast.error("You need to enter the task content.");
+      toast.error("You need to enter a task description.");
     }
   };
 

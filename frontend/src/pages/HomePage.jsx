@@ -20,14 +20,13 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchTasks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateQuery]);
 
   useEffect(() => {
     setPage(1);
   }, [filter, dateQuery]);
 
-  // Logic
+  // Logic to fetch tasks
   const fetchTasks = async () => {
     try {
       const res = await api.get(`/tasks?filter=${dateQuery}`);
@@ -35,8 +34,8 @@ const HomePage = () => {
       setActiveTaskCount(res.data.activeCount);
       setCompleteTaskCount(res.data.completeCount);
     } catch (error) {
-      console.error("An error occurred while fetching tasks:", error);
-      toast.error("An error occurred while fetching tasks.");
+      console.error("Error fetching tasks:", error);
+      toast.error("Error fetching tasks.");
     }
   };
 
@@ -60,7 +59,7 @@ const HomePage = () => {
     setPage(newPage);
   };
 
-  // Variables
+  // Filtering tasks
   const filteredTasks = taskBuffer.filter((task) => {
     switch (filter) {
       case "active":
@@ -94,8 +93,7 @@ const HomePage = () => {
         radial-gradient(circle at 70% 30%, rgba(255, 182, 193, 0.4), transparent 60%)`,
         }}
       />
-
-      {/* Main Content */}
+      {/* Main Content/Components */}
       <div className="container relative z-10 pt-8 mx-auto">
         <div className="w-full max-w-2xl p-6 mx-auto space-y-6">
           {/* Header */}
@@ -104,7 +102,7 @@ const HomePage = () => {
           {/* Add Task */}
           <AddTask handleNewTaskAdded={handleTaskChanged} />
 
-          {/* Statistics & Filters */}
+          {/* Stats and Filters */}
           <StatsAndFilters
             filter={filter}
             setFilter={setFilter}
@@ -119,7 +117,7 @@ const HomePage = () => {
             handleTaskChanged={handleTaskChanged}
           />
 
-          {/* Pagination & Date Filter */}
+          {/* Pagination and Date Filter */}
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <TaskListPagination
               handleNext={handleNext}

@@ -10,17 +10,19 @@ const TaskEmptyState = ({ filter }) => {
         <div>
           <h3 className="font-medium text-foreground">
             {filter === "active"
-              ? "No active tasks."
+              ? "No tasks are currently in progress."
               : filter === "completed"
-                ? "No completed tasks yet."
-                : "No tasks yet."}
+                ? "No tasks have been completed yet."
+                : "No tasks available."}
           </h3>
 
           <p className="text-sm text-muted-foreground">
             {filter === "all"
               ? "Add your first task to get started!"
-              : `Switch to "All" to see tasks that are ${
-                  filter === "active" ? "completed." : "in progress."
+              : `Switch to "all" to see ${
+                  filter === "active"
+                    ? "completed tasks."
+                    : "tasks in progress."
                 }`}
           </p>
         </div>

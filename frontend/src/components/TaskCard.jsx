@@ -14,31 +14,31 @@ import api from "@/lib/axios";
 import { toast } from "sonner";
 
 const TaskCard = ({ task, index, handleTaskChanged }) => {
-  const [isEditting, setIsEditting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [updateTaskTitle, setUpdateTaskTitle] = useState(task.title || "");
 
   const deleteTask = async (taskId) => {
     try {
       await api.delete(`/tasks/${taskId}`);
-      toast.success("Task deleted successfully.");
+      toast.success("Task has been deleted.");
       handleTaskChanged();
     } catch (error) {
-      console.error("Error deleting task:", error);
-      toast.error("Error deleting task");
+      console.error("Error occurred while deleting task.", error);
+      toast.error("An error occurred while deleting the task.");
     }
   };
 
   const updateTask = async () => {
     try {
-      setIsEditting(false);
+      setIsEditing(false);
       await api.put(`/tasks/${task._id}`, {
         title: updateTaskTitle,
       });
-      toast.success(`Task updated to "${updateTaskTitle}".`);
+      toast.success(`Task has been updated to "${updateTaskTitle}"`);
       handleTaskChanged();
     } catch (error) {
-      console.error("Error updating task:", error);
-      toast.error("Error updating task");
+      console.error("Error occurred while updating task.", error);
+      toast.error("An error occurred while updating the task.");
     }
   };
 
@@ -49,19 +49,18 @@ const TaskCard = ({ task, index, handleTaskChanged }) => {
           status: "complete",
           completedAt: new Date().toISOString(),
         });
-        toast.success(`"${task.title}" marked as completed.`);
+        toast.success(`"${task.title}" has been completed.`);
       } else {
         await api.put(`/tasks/${task._id}`, {
           status: "active",
           completedAt: null,
         });
-        toast.success(`"${task.title}" marked as active.`);
+        toast.success(`"${task.title}" marked as not completed.`);
       }
-
       handleTaskChanged();
     } catch (error) {
-      console.error("Error updating task:", error);
-      toast.error("Error updating task");
+      console.error("Error occurred while updating task.", error);
+      toast.error("An error occurred while updating the task.");
     }
   };
 
@@ -80,7 +79,7 @@ const TaskCard = ({ task, index, handleTaskChanged }) => {
       style={{ animationDelay: `${index * 50}ms` }}
     >
       <div className="flex items-center gap-4">
-        {/* Toggle complete button */}
+        {/* Complete/Incomplete button */}
         <Button
           variant="ghost"
           size="icon"
@@ -99,9 +98,9 @@ const TaskCard = ({ task, index, handleTaskChanged }) => {
           )}
         </Button>
 
-        {/* Display or edit title */}
+        {/* Display or edit task title */}
         <div className="flex-1 min-w-0">
-          {isEditting ? (
+          {isEditing ? (
             <Input
               placeholder="What needs to be done?"
               className="flex-1 h-12 text-base border-border/50 focus:border-primary/50 focus:ring-primary/20"
@@ -110,7 +109,7 @@ const TaskCard = ({ task, index, handleTaskChanged }) => {
               onChange={(e) => setUpdateTaskTitle(e.target.value)}
               onKeyPress={handleKeyPress}
               onBlur={() => {
-                setIsEditting(false);
+                setIsEditing(false);
                 setUpdateTaskTitle(task.title || "");
               }}
             />
@@ -153,7 +152,7 @@ const TaskCard = ({ task, index, handleTaskChanged }) => {
             size="icon"
             className="flex-shrink-0 transition-colors size-8 text-muted-foreground hover:text-info"
             onClick={() => {
-              setIsEditting(true);
+              setIsEditing(true);
               setUpdateTaskTitle(task.title || "");
             }}
           >
